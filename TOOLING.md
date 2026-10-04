@@ -15,9 +15,10 @@ openspec init        # in the repo root
 openspec update      # after a CLI upgrade, to refresh the generated files
 ```
 
-`init` generates per-agent entry points — `.claude/skills/openspec-*`, `.claude/commands/opsx/*`,
-`.codex/skills/openspec-*` — and `openspec update` overwrites them, so never hand-edit a file
-carrying `generatedBy` in its frontmatter. Workflow conventions belong in `AGENTS.md` instead.
+`init` generates per-agent entry points — `.claude/skills/openspec-*`, `.claude/commands/opsx/*`
+and `.codex/skills/openspec-*` — each carrying `generatedBy` in its frontmatter. `openspec update`
+rewrites them from scratch, which is why anything you want to survive an upgrade has to live
+elsewhere.
 
 `openspec/config.yaml` is the one file you do own. It holds a `context` block shown to the agent
 whenever it shapes an artifact, plus optional per-artifact `rules`. Keep the context lean: it is
@@ -56,8 +57,9 @@ that disagree, and nobody can tell which one was implemented.
 Pulls up-to-date documentation for a library or framework at the version in use, instead of
 whatever the model remembers.
 
+`.mcp.json`:
+
 ```json
-// .mcp.json
 {
   "mcpServers": {
     "context7": {
@@ -73,8 +75,9 @@ whatever the model remembers.
 A repo-level `.mcp.json` is only an offer; Claude Code still asks before trusting it. Accept it
 once, or pre-approve it:
 
+`.claude/settings.local.json`:
+
 ```json
-// .claude/settings.local.json
 { "enabledMcpjsonServers": ["context7"] }
 ```
 
@@ -84,8 +87,13 @@ the repo — so a project using both agents needs the server added in both place
 ## Playwright MCP — driving a real browser
 
 For verifying a flow end to end as a user, and for reading the console when something fails
-silently. It drops console logs and screenshots into `.playwright-mcp/`, which belongs in
-`.gitignore`.
+silently. Useful across every project, so register it once at user scope rather than per repo:
+
+```bash
+claude mcp add playwright --scope user -- npx @playwright/mcp@latest
+```
+
+It drops console logs and screenshots into `.playwright-mcp/`, which belongs in `.gitignore`.
 
 ## Dependency docs beat training data
 
@@ -103,8 +111,9 @@ Pair it with context7 for libraries that do not ship docs locally.
 
 Approving the same safe command every session is pure friction. Allowlist the repetitive ones:
 
+`.claude/settings.local.json`:
+
 ```json
-// .claude/settings.local.json
 {
   "permissions": {
     "allow": [
@@ -120,8 +129,9 @@ Approving the same safe command every session is pure friction. Allowlist the re
 `settings.local.json` is personal and untracked; `settings.json` is committed and shared, and is
 also where a project enables a plugin for everyone:
 
+`.claude/settings.json`:
+
 ```json
-// .claude/settings.json
 { "enabledPlugins": { "frontend-design@claude-plugins-official": true } }
 ```
 

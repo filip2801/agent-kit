@@ -17,9 +17,8 @@ and what goes where are in `README.md`.
 - The `description` decides when an agent picks the skill, so it starts with "Use when…" and names
   the situations and phrasings that should trigger it, not what the skill does internally.
 - Shared skills must work in every agent. Describe the action ("ask the user", "dispatch a
-  subagent if your agent can, otherwise…"), never a tool only one agent has (`AskUserQuestion`,
-  `Agent`, the Workflow tool). A skill that cannot be written that way goes under `claude/` or
-  `codex/`.
+  subagent if your agent can, otherwise…"), never a tool only one agent has. A skill that cannot
+  be written that way is agent-specific, and `README.md` says where it goes.
 
 ## Instruction sections (`agents-md/`)
 

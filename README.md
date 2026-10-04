@@ -9,6 +9,7 @@ own repo.
 
 ```
 agent-kit/
+  AGENTS.md                  # working rules for the kit itself, not material to reuse
   INSTALL.md                 # how a project opts into the kit, incl. on a new machine
   TOOLING.md                 # libraries, CLIs and plugins worth setting up, with their setup
   .claude-plugin/
@@ -42,9 +43,9 @@ agent-kit/
 
 ## What goes where
 
-- **`skills/`** holds a skill only if it works in both agents. It describes what to do ("ask the
-  user", "run these in parallel if you can"), never a tool that one agent alone has. A skill that
-  needs a Claude-only tool (subagents, `AskUserQuestion`, the Workflow tool) goes under `claude/`.
+- **`skills/`** holds a skill only if it works in both agents. A skill that cannot avoid a tool
+  only one agent has (`AskUserQuestion`, `Agent`, the Workflow tool) goes under `claude/` or
+  `codex/` instead; how to write one so it stays portable is in `AGENTS.md`.
 - **`agents-md/`** holds the project instructions worth repeating across projects, one topic per
   file. A new project takes the sections it wants by copying files into its own `AGENTS.md` or
   `CLAUDE.md`. One file per section means a section can be copied whole, and diffed against a project's
