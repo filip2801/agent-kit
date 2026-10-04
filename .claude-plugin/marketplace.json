@@ -9,7 +9,7 @@
     {
       "name": "fk",
       "description": "Personal skills for coding agents: spec review and session handoff",
-      "source": "./claude"
+      "source": "./"
     }
   ]
 }

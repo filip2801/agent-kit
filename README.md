@@ -13,7 +13,8 @@ agent-kit/
   INSTALL.md                 # how a project opts into the kit, incl. on a new machine
   TOOLING.md                 # libraries, CLIs and plugins worth setting up, with their setup
   .claude-plugin/
-    marketplace.json         # marketplace "agent-kit", listing the plugins below
+    marketplace.json         # marketplace "agent-kit", listing the plugin below
+    plugin.json              # plugin "fk", rooted at the repo -> skills load as fk:<skill>
   skills/                    # shared: plain SKILL.md skills both agents can load
     new-session-prompt/      # handoff prompt for continuing work in a fresh session
       SKILL.md
@@ -29,10 +30,8 @@ agent-kit/
     tests-spring.md          # @SpringBootTest over @DataJpaTest, repository-level queries
     database.md              # migrations only, who owns enum values
     openspec.md              # review after propose, generated files, committing artifacts
-  claude/                    # Claude Code only
-    .claude-plugin/
-      plugin.json            # plugin "fk" -> skills load as fk:<skill>
-    skills/                  # symlinks into ../../skills for the shared ones
+  claude/                    # Claude Code only (not populated yet)
+    skills/
     commands/
     workflows/               # Workflow tool scripts
     agents/
@@ -52,10 +51,12 @@ agent-kit/
   copy later to see what drifted.
 - **`TOOLING.md`** is for the human setting a project up, not for the agent: what to install, and
   the snippet that actually enables it. A rule the agent must follow goes in `agents-md/` instead.
-- **`claude/`** is the Claude Code plugin root: commands, workflows, agents and hooks. A plugin
-  loads skills from its own `skills/`, so the shared ones reach Claude Code as relative symlinks
-  from `claude/skills/` into `skills/`. Both ends stay inside the repo, so a clone keeps working.
-  A Claude-only skill lives in `claude/skills/` as a real directory.
+- **The plugin is rooted at the repo**, so Claude Code loads the shared `skills/` directly, with
+  no symlinks or copies, and an install from a git source still carries every skill.
+- **`claude/`** holds what only Claude Code can use: skills, commands, workflows, agents and
+  hooks. The plugin does not look there by default, so the first file in each of its folders
+  comes with an entry in `.claude-plugin/plugin.json` (`"skills": ["./claude/skills/"]`,
+  `"commands": "./claude/commands/"`, …).
 - **`codex/`** is the Codex-only counterpart.
 
 ## Installing in a project

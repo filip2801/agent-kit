@@ -19,6 +19,8 @@ and what goes where are in `README.md`.
 - Shared skills must work in every agent. Describe the action ("ask the user", "dispatch a
   subagent if your agent can, otherwise…"), never a tool only one agent has. A skill that cannot
   be written that way is agent-specific, and `README.md` says where it goes.
+- A skill that needs another one says to run it by name ("run the `spec-review` skill"), never
+  links into another skill's directory. Material two skills share lives in the skill that owns it.
 
 ## Instruction sections (`agents-md/`)
 

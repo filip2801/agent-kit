@@ -46,7 +46,7 @@ re-running two commands.
 ## Day to day
 
 - **Edits to a skill are live.** A directory-sourced plugin loads in place from
-  `<agent-kit>/claude`, so a `git pull` or a local edit applies at the next session start, or
+  the `<agent-kit>` checkout, so a `git pull` or a local edit applies at the next session start, or
   immediately with `/reload-plugins`. Nothing has to be pushed. `claude plugin update` is a no-op
   here: it compares the `version` in `plugin.json` and reports the plugin already current.
 - **Check what loaded:** `claude plugin details fk@agent-kit` lists the skills found and their
