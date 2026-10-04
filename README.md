@@ -10,6 +10,7 @@ own repo.
 ```
 agent-kit/
   INSTALL.md                 # how a project opts into the kit, incl. on a new machine
+  TOOLING.md                 # libraries, CLIs and plugins worth setting up, with their setup
   .claude-plugin/
     marketplace.json         # marketplace "agent-kit", listing the plugins below
   skills/                    # shared: plain SKILL.md skills both agents can load
@@ -18,11 +19,14 @@ agent-kit/
     spec-review/             # review an OpenSpec change before implementing it
       SKILL.md
   agents-md/                 # shared: AGENTS.md / CLAUDE.md sections, one file per section
-    tests.md
-    code-comments.md
+    instruction-files.md     # AGENTS.md is the source of truth, CLAUDE.md imports it
+    workflow.md              # vertical slices, checks before done, a commit per task
     code-style.md
-    git-and-prs.md
-    diagrams.md
+    code-comments.md
+    code-review-checklist.md
+    tests.md                 # naming, given/when/then, both levels, what not to test
+    tests-spring.md          # @SpringBootTest over @DataJpaTest, repository-level queries
+    database.md              # migrations only, who owns enum values
     openspec.md              # review after propose, generated files, committing artifacts
   claude/                    # Claude Code only
     .claude-plugin/
@@ -32,7 +36,7 @@ agent-kit/
     workflows/               # Workflow tool scripts
     agents/
     hooks/
-  codex/                     # Codex only
+  codex/                     # Codex only (not populated yet)
     prompts/
 ```
 
@@ -45,6 +49,8 @@ agent-kit/
   file. A new project takes the sections it wants by copying files into its own `AGENTS.md` or
   `CLAUDE.md`. One file per section means a section can be copied whole, and diffed against a project's
   copy later to see what drifted.
+- **`TOOLING.md`** is for the human setting a project up, not for the agent: what to install, and
+  the snippet that actually enables it. A rule the agent must follow goes in `agents-md/` instead.
 - **`claude/`** is the Claude Code plugin root: commands, workflows, agents and hooks. A plugin
   loads skills from its own `skills/`, so the shared ones reach Claude Code as relative symlinks
   from `claude/skills/` into `skills/`. Both ends stay inside the repo, so a clone keeps working.
