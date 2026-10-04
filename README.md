@@ -9,6 +9,7 @@ own repo.
 
 ```
 agent-kit/
+  INSTALL.md                 # how a project opts into the kit, incl. on a new machine
   .claude-plugin/
     marketplace.json         # marketplace "agent-kit", listing the plugins below
   skills/                    # shared: plain SKILL.md skills both agents can load
@@ -50,28 +51,25 @@ agent-kit/
   A Claude-only skill lives in `claude/skills/` as a real directory.
 - **`codex/`** is the Codex-only counterpart.
 
+## Installing in a project
+
+The kit is a marketplace (`agent-kit`) holding one plugin (`fk`), registered from its path and
+installed per project, so nothing lands at user scope:
+
+```bash
+cd <project>
+claude plugin marketplace add <absolute path to agent-kit> --scope local
+claude plugin install fk@agent-kit --scope local
+```
+
+Skills then load as `fk:<skill>` from the next session. The wiring lives in the project's gitignored
+`.claude/settings.local.json`, so it is re-done per machine and per project — see
+[INSTALL.md](INSTALL.md) for the new-machine walkthrough, the one-Claude-install-per-config-dir
+caveat, and how edits to a skill reach a running project.
+
 ## Not here
 
 - Anything tied to one employer or codebase: stage deployment, Jira ticket creation, internal API
   clients, log search over a company's indices.
 - Files a tool generates per project, such as the `openspec-*` skills and `/opsx:*` commands; these
   come from `openspec init` / `openspec update`.
-
-## Installing in a project
-
-The kit is a marketplace holding one plugin, `fk`. Register it from the path — not from GitHub, so
-Claude reads this working copy and a `git pull` here is live — and install it per project, which
-keeps user scope untouched:
-
-```bash
-cd <the project>
-claude plugin marketplace add /path/to/agent-kit --scope local
-claude plugin install fk@agent-kit --scope local
-```
-
-`--scope local` declares both in the project's `.claude/settings.local.json`. Skills then load as
-`fk:spec-review`, `fk:new-session-prompt`. Plugin install state is per Claude config directory, so
-an install has to be repeated for each one that should see the kit.
-
-The `agents-md/` sections are not part of the plugin: a project copies those into its own
-`AGENTS.md`.
