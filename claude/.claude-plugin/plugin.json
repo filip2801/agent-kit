@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "fk",
+  "description": "Personal skills for coding agents: spec review and session handoff",
+  "version": "0.1.0",
+  "author": {
+    "name": "Filip Karas"
+  },
+  "keywords": [
+    "skills",
+    "openspec",
+    "spec-review",
+    "handoff"
+  ]
+}

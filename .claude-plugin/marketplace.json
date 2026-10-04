@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agent-kit",
+  "description": "Personal skills, instructions and workflows for coding agents",
+  "owner": {
+    "name": "Filip Karas"
+  },
+  "plugins": [
+    {
+      "name": "fk",
+      "description": "Personal skills for coding agents: spec review and session handoff",
+      "source": "./claude"
+    }
+  ]
+}
